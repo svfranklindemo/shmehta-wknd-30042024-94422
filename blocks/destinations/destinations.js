@@ -18,7 +18,7 @@ export default function decorate(block) {
         console.log('No country value found.');
       }
     }
-    if(!link && divElement.textContent.trim().toLowerCase() === 'service ') {
+    if(!link && divElement.textContent.trim().toLowerCase() === 'service') {
       if (divElements[index + 1]) {
         link = divElements[index + 1].textContent.trim();
       }
