@@ -1,8 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
-  const link = block.querySelector('a');
-  const divElements = block.querySelectorAll('div');
+  let anchor = block.querySelector('a');
+  let divElements = block.querySelectorAll('div');
+  let link = anchor?.href;
   let country = '';
   let data = [];
 
@@ -10,8 +11,16 @@ export default function decorate(block) {
     if (divElement.textContent.trim().toLowerCase() === 'country') {
       if (divElements[index + 1]) {
         country = divElements[index + 1].textContent.trim();
+        if(!country) {
+          console.log('No country value found.');
+        }
       } else {
         console.log('No country value found.');
+      }
+    }
+    if(!link && divElement.textContent.trim().toLowerCase() === 'service ') {
+      if (divElements[index + 1]) {
+        link = divElements[index + 1].textContent.trim();
       }
     }
   });
@@ -40,7 +49,7 @@ export default function decorate(block) {
   async function initialize() {
     const response = await fetch(link?.href);
 
-    if (response.ok) {
+    if (response?.ok) {
       const jsonData = await response.json();
       data = jsonData?.data;
 
